@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<catalog>
+    <books>
+        <book id="4">
+            <name>About Nothing</name>
+            <ISBN>123465</ISBN>
+            <price>44 $</price>
+            <authors>
+                <name>Vova Zemsky</name>
+            </authors>
+            <description>All about All</description>
+            <publishDate>2009-08-22+03:00</publishDate>
+        </book>
+    </books>
+</catalog>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="com.globallogic" module="jar-services-blank" status="integration">
+	</info>
+
+	<configurations>
+		<conf name="compile" visibility="public" description="for third-party dependencies" />
+		<conf name="test" visibility="private" description="for testing our framework" />
+	</configurations>
+
+	<publications>
+		<artifact name="jar-services-blank" ext="jar" conf="compile" />
+	</publications>
+
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.8.2" conf="test->default" />
+		<dependency org="net.sourceforge.cobertura" name="cobertura" rev="1.9.4.1" conf="test->default" />
+	</dependencies>
+</ivy-module>
