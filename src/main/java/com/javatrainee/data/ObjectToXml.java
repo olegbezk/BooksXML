@@ -60,7 +60,7 @@ public class ObjectToXml {
 		m.marshal(catalog, st);
 		String xml = st.toString();
 
-		System.out.println(" toString output :");
+		System.out.println("\n toString output : \n");
 		System.out.println(xml);
 
 	}

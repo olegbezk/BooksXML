@@ -6,6 +6,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import com.javatrainee.data.Catalog.Books.Book;
+
 public class XMLToObject {
 
 	public static void main(String[] args) throws JAXBException {
@@ -16,8 +18,9 @@ public class XMLToObject {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		Catalog catalog = (Catalog) unmarshaller.unmarshal(xml);
 		
-		System.out.println(catalog);
-		
+		for(Book s : catalog.getBooks().getBook()){
+				System.out.println(s.getName());
+		}
 
 	}
 
