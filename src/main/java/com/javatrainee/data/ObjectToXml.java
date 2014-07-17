@@ -54,7 +54,7 @@ public class ObjectToXml {
 		m.marshal(
 				catalog,
 				new FileOutputStream(
-						"C:/Users/Oleg/git/BooksXML/src/main/resources/books.xml"));
+						"C:/Users/Oleg/workspace/BooksXML/src/main/resources/books.xml"));
 
 		StringWriter st = new StringWriter();
 		m.marshal(catalog, st);

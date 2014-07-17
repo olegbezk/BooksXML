@@ -11,7 +11,7 @@ public class XMLToObject {
 	public static void main(String[] args) throws JAXBException {
 		
 		File xml = new File(
-				"C:/Users/Oleg/git/BooksXML/src/main/resources/books.xml");
+				"C:/Users/Oleg/workspace/BooksXML/src/main/resources/books.xml");
 		JAXBContext context = JAXBContext.newInstance(Catalog.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		Catalog catalog = (Catalog) unmarshaller.unmarshal(xml);
