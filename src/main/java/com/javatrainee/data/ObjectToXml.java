@@ -1,6 +1,7 @@
 package com.javatrainee.data;
 
 import java.io.FileNotFoundException;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.GregorianCalendar;
 
@@ -12,15 +13,42 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 public class ObjectToXml {
+	
+	private static Marshaller marshaller;
 
+	static {
+		try {
+			JAXBContext context = JAXBContext.newInstance(Catalog.class);
+			marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) throws JAXBException,
 			FileNotFoundException, DatatypeConfigurationException {
+		
+		new ObjectToXml().marshBooksToStream(System.out);
+		
+		String xml = new ObjectToXml().marshallBooksToString();
 
-		JAXBContext context = JAXBContext.newInstance(Catalog.class);
+		System.out.println("\n toString output : \n");
+		System.out.println(xml);
 
-		Marshaller m = context.createMarshaller();
-		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	}
 
+	public String marshallBooksToString() throws DatatypeConfigurationException, JAXBException {
+		StringWriter st = new StringWriter();
+		marshaller.marshal(getCatalog(), st);
+		return st.toString();
+	}
+	
+	public void marshBooksToStream(OutputStream os) throws JAXBException, DatatypeConfigurationException {
+		marshaller.marshal(getCatalog(), os);
+	}
+	
+	public Catalog getCatalog() throws DatatypeConfigurationException {
 		Catalog catalog = new Catalog();
 
 		Books books = new Books();
@@ -47,16 +75,7 @@ public class ObjectToXml {
 		b1.setPublishDate(date);
 
 		books.getBook().add(b1);
-
-		m.marshal(catalog, System.out);
-
-		StringWriter st = new StringWriter();
-		m.marshal(catalog, st);
-		String xml = st.toString();
-
-		System.out.println("\n toString output : \n");
-		System.out.println(xml);
-
+		
+		return catalog;
 	}
-
 }
