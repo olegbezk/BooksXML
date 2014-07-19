@@ -1,7 +1,6 @@
 package com.javatrainee.data;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.StringWriter;
 import java.util.GregorianCalendar;
 
@@ -24,11 +23,11 @@ public class ObjectToXml {
 
 		Catalog catalog = new Catalog();
 
-		Catalog.Books books = new Catalog.Books();
+		Books books = new Books();
 
 		catalog.setBooks(books);
 
-		Catalog.Books.Book.Authors author = new Catalog.Books.Book.Authors();
+		Authors author = new Authors();
 
 		author.getName().add("Vova Zemsky");
 
@@ -37,7 +36,7 @@ public class ObjectToXml {
 		XMLGregorianCalendar date = DatatypeFactory.newInstance()
 				.newXMLGregorianCalendar(c);
 
-		Catalog.Books.Book b1 = new Catalog.Books.Book();
+		Book b1 = new Book();
 
 		b1.setAuthors(author);
 		b1.setId((short) 4);
@@ -50,11 +49,6 @@ public class ObjectToXml {
 		books.getBook().add(b1);
 
 		m.marshal(catalog, System.out);
-
-		m.marshal(
-				catalog,
-				new FileOutputStream(
-						"C:/Users/Oleg/workspace/BooksXML/src/main/resources/books.xml"));
 
 		StringWriter st = new StringWriter();
 		m.marshal(catalog, st);

@@ -1,10 +1,12 @@
 <project name="jar-services-blank" default="package" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<property environment="env" />
+	<property name="gen.dir" value="src/main/gen" />
 	<property name="src.dir" value="src/main/java" />
 	<property name="lib.dir" value="${basedir}/lib" />
 	<property name="build.dir" value="build" />
 	<property name="dist.dir" value="dist" />
+	
 	<property name="testsrc.dir" value="src/test/java" />
 	<property name="reports.dir" value="reports" />
 	<property name="jar.file.name" value="${ant.project.name}.jar" />
@@ -37,7 +39,7 @@
 		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
 	</target>
 
-	<target name="package" depends="clean, resolve, compile" description="--> resolve dependencies, compile and run the project">
+	<target name="package" depends="clean, resolve, xjcgen, compile" description="--> resolve dependencies, compile and run the project">
 		<copy toDir="${build.dir}/classes">
 			<fileset dir="${basedir}/src/main/resources">
 				<include name="**/*.xml" />
@@ -67,6 +69,7 @@
 
 	<target name="clean" description="--> clean the project">
 		<delete includeemptydirs="true" quiet="true">
+			<fileset dir="${gen.dir}" />
 			<fileset dir="${dist.dir}" />
 			<fileset dir="${build.dir}" />
 			<fileset dir="${lib.dir}" />
@@ -78,12 +81,23 @@
 		<ivy:cleancache />
 	</target>
 
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: xjcgen                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="xjcgen">
+		<mkdir dir="${gen.dir}"/>
+		
+		<exec executable="xjc">
+			<arg line="-b ./src/main/resources/binding.xml -d src/main/gen -p com.javatrainee.data ./src/main/resources/books.xsd" />
+		</exec>
+	</target>
+
 	<target name="compile">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.dir}/classes" />
 		<mkdir dir="${build.dir}/testclasses" />
 
-		<javac debug="on" fork="true" destdir="${build.dir}/classes" srcdir="${src.dir}" classpathref="lib.classpath" includeantruntime="false">
+		<javac debug="on" fork="true" destdir="${build.dir}/classes" srcdir="${src.dir};${gen.dir}" classpathref="lib.classpath" includeantruntime="false">
 		</javac>
 
 		<javac debug="on" fork="true" destdir="${build.dir}/testclasses" srcdir="${testsrc.dir}" includeantruntime="false">
