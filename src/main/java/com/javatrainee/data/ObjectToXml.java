@@ -49,6 +49,7 @@ public class ObjectToXml {
 	}
 	
 	public Catalog getCatalog() throws DatatypeConfigurationException {
+		
 		Catalog catalog = new Catalog();
 
 		Books books = new Books();

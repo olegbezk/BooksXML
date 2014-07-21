@@ -14,9 +14,11 @@ import org.custommonkey.xmlunit.examples.MultiLevelElementNameAndTextQualifier;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import com.javatrainee.data.Catalog;
 import com.javatrainee.data.ObjectToXml;
+import com.javatrainee.data.XMLToObject;
 
-public class ObjectToXmlTest {
+public class MarshUnmarshTest {
 
 	@Test
 	public void marshToStr() throws DatatypeConfigurationException,
@@ -57,6 +59,33 @@ public class ObjectToXmlTest {
 
 		assertEqualXmls(expected, extracted);
 
+	}
+	
+	@Test
+	public void unmarshFromClassPath() throws SAXException, IOException{
+		XMLToObject xto = new XMLToObject();
+		String s = xto.unmarchFromClassPath();
+		String expected = "<?xml version=\"1.0\"" + " encoding=\"UTF-8\""
+				+ " standalone=\"yes\"?>" + " <catalog> <books>"
+				+ " <book id=\"4\">" + " <name>About Nothing</name>"
+				+ " <ISBN>123465</ISBN>" + " <price>44 $</price>"
+				+ " <authors>" + " <name>Vova Zemsky</name>" + " </authors>"
+				+ " <description>All about All</description>"
+				+ " <publishDate>2009-08-22+03:00</publishDate>" + " </book>"
+				+ " </books>" + " </catalog>";
+		assertEqualXmls(expected, s);
+	}
+	
+	@Test
+	public void unmarshFromFile() throws JAXBException{
+		XMLToObject xto = new XMLToObject();
+		
+		Catalog cat = xto.unmarshFromFile();
+		
+		Catalog catalog = new Catalog();
+		
+		equals(catalog.equals(cat));
+		
 	}
 
 	private void assertEqualXmls(String expectedXml, String actualXml)
