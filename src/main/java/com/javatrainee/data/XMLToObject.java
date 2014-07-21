@@ -38,6 +38,8 @@ public class XMLToObject {
 
 		return (Catalog) unmarshaller.unmarshal(xml);
 	}
+	
+	
 
 	public String getStringFromInFile() {
 		
